@@ -38,7 +38,7 @@ class WpUser < WpItem
           if valid_password?(response, password, options)
             found         = true
             self.password = password
-            return
+            next
           end
         end
 
