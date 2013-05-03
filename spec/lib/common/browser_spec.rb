@@ -134,7 +134,7 @@ describe Browser do
     let(:default_expectation) {
       {
         cache_ttl: 250,
-        headers: { 'User-Agent' => 'SomeUA' },
+        headers: { 'User-Agent' => 'SomeUA', 'Accept' => nil },
         ssl_verifypeer: false, ssl_verifyhost: 0,
         cookiejar: cookie_jar, cookiefile: cookie_jar
       }

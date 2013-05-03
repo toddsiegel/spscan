@@ -130,7 +130,7 @@ class Browser
     params.merge!(cookiejar: @cache_dir + '/cookie-jar')
     params.merge!(cookiefile: @cache_dir + '/cookie-jar')
 
-    params
+    Browser.append_params_header_field(params, 'Accept', nil)
   end
 
   private
