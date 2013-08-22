@@ -6,7 +6,6 @@ class Controller
 
   def initialize(infos = {})
     @author    = infos[:author]
-    @format    = 'cli'
 
     @views_dir = File.expand_path(File.join(
       self.class.instance_method(:initialize).source_location[0], '..', '..' , 'views',
