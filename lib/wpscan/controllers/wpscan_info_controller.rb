@@ -6,7 +6,8 @@ class WPScanInfoController < WPScanController
     super(author: 'WPScanTeam')
 
     register_options(
-      ['--url TARGET_URL', '-u', 'The target url']
+      ['--url TARGET_URL', '-u', 'The target url'],
+      ['--format [cli,json]', 'The output format']
     )
   end
 

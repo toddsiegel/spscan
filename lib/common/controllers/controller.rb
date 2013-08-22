@@ -47,8 +47,10 @@ class Controller
   # param [ String ] action
   # return [ String ] The rendered action
   def render(action)
-    if allowed_formats.include?(@format)
-      view = File.join(@views_dir, "#{action}.#{@format}.erb")
+    format = (@parsed_options[:format] || 'cli').downcase
+
+    if allowed_formats.include?(format)
+      view = File.join(@views_dir, "#{action}.#{format}.erb")
 
       if File.exists?(view)
         ERB.new(File.read(view)).result(binding)
