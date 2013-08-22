@@ -25,6 +25,12 @@ def main
     exit(0)
   end
 
+  # What about the banner ?
+  # In CLI mode, the color code are also output :/
+  if output_file = wpscan_options[:output]
+    $stdout = File.open(output_file, 'w')
+  end
+
   controllers.validate_parsed_options(wpscan_options)
 
   wp_target = WpTarget.new(wpscan_options[:url], wpscan_options)
