@@ -8,6 +8,28 @@ def main
   # delete old logfile, check if it is a symlink first.
   File.delete(LOG_FILE) if File.exist?(LOG_FILE) and !File.symlink?(LOG_FILE)
 
+  option_parser = CustomOptionParser.new('Usage: ./wpscan.rb [options]', 60)
+  option_parser.separator ''
+  option_parser.add(['-v', '--verbose', 'Verbose output'])
+
+  controllers = Controllers.new(option_parser)
+  controllers.register(WPScanInfoController.new)
+
+  parsed_options = option_parser.results
+
+  controllers.validate_parsed_options(parsed_options)
+
+  wp_target = WpTarget.new(parsed_options[:url], parsed_options)
+
+  controllers.each do |_, controller|
+    controller.wp_target = wp_target
+  end
+
+  puts controllers[:WPScanInfo].result('scan_start')
+  puts controllers[:WPScanInfo].result('scan_stop')
+
+
+  exit
   banner()
 
   begin
@@ -139,7 +161,7 @@ def main
     wp_target.interesting_headers.each do |header|
       output = "#{green('[+]')} Interesting header: "
 
-      if header[1].class == Array 
+      if header[1].class == Array
         header[1].each do |value|
           puts output + "#{header[0]}: #{value}"
         end
