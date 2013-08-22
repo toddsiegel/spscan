@@ -17,6 +17,12 @@ def main
 
   parsed_options = option_parser.results
 
+  if parsed_options.empty?
+    puts 'No option supplied'
+    puts option_parser
+    exit(0)
+  end
+
   controllers.validate_parsed_options(parsed_options)
 
   wp_target = WpTarget.new(parsed_options[:url], parsed_options)
