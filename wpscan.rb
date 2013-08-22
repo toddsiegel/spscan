@@ -5,6 +5,8 @@ $: << '.'
 require File.dirname(__FILE__) + '/lib/wpscan/wpscan_helper'
 
 def main
+  banner()
+
   # delete old logfile, check if it is a symlink first.
   File.delete(LOG_FILE) if File.exist?(LOG_FILE) and !File.symlink?(LOG_FILE)
 
@@ -15,17 +17,17 @@ def main
   controllers = Controllers.new(option_parser)
   controllers.register(WPScanInfoController.new)
 
-  parsed_options = option_parser.results
+  wpscan_options = option_parser.results
 
-  if parsed_options.empty?
+  if wpscan_options.empty?
     puts 'No option supplied'
     puts option_parser
     exit(0)
   end
 
-  controllers.validate_parsed_options(parsed_options)
+  controllers.validate_parsed_options(wpscan_options)
 
-  wp_target = WpTarget.new(parsed_options[:url], parsed_options)
+  wp_target = WpTarget.new(wpscan_options[:url], wpscan_options)
 
   controllers.each do |_, controller|
     controller.wp_target = wp_target
@@ -36,7 +38,6 @@ def main
 
 
   exit
-  banner()
 
   begin
     wpscan_options = WpscanOptions.load_from_arguments
