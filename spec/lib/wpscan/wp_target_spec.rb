@@ -50,53 +50,18 @@ describe WpTarget do
     end
   end
 
-  describe '#wordpress?' do
-    # each url (wp-login and xmlrpc) pointed to a 404
-    before :each do
-      stub_request(:get, wp_target.url).
-        to_return(status: 200, body: '', headers: { 'X-Pingback' => wp_target.uri.merge('xmlrpc.php')})
+  describe '#sharepoint?' do
 
-      # Preventing redirection check from login_url()
-      wp_target.stub(redirection: nil)
+    context "not a SharePoint site" do
 
-      [wp_target.login_url, wp_target.xml_rpc_url].each do |url|
-        stub_request(:get, url).to_return(status: 404, body: '')
+      it "is not a SharePoint site if no SharePoint specific headers or html content exist in the page." do
+         stub_request_to_fixture(url: wp_target.url, fixture: fixtures_dir + '/wp_content_dir/not_sharepoint.html')
+
+         wp_target.should_not be_sharepoint
       end
+
     end
 
-    it 'returns true if there is a /wp-content/ detected in the index page source' do
-      stub_request_to_fixture(url: wp_target.url, fixture: fixtures_dir + '/wp_content_dir/wordpress-3.4.1.htm')
-
-      wp_target.should be_wordpress
-    end
-
-    it 'returns true if the xmlrpc is found' do
-      stub_request(:get, wp_target.xml_rpc_url).
-        to_return(status: 200, body: File.new(fixtures_dir + '/xmlrpc.php'))
-
-      wp_target.should be_wordpress
-    end
-
-    it 'returns true if the wp-login is found and is a valid wordpress one' do
-      stub_request(:get, wp_target.login_url).
-        to_return(status: 200, body: File.new(fixtures_dir + '/wp-login.php'))
-
-      wp_target.should be_wordpress
-    end
-
-    it 'returns false if both files are not found (404)' do
-      wp_target.should_not be_wordpress
-    end
-
-    context 'when the url contains "wordpress" and is a 404' do
-      let(:target_url) { 'http://lamp/wordpress-3.5./' }
-
-      it 'returns false' do
-        stub_request(:get, wp_target.login_url).to_return(status: 404, body: 'The requested URL /wordpress-3.5. was not found on this server.')
-
-        wp_target.should_not be_wordpress
-      end
-    end
   end
 
   describe '#redirection' do

@@ -33,27 +33,8 @@ class WpTarget < WebSite
 
   # check if the target website is
   # actually running wordpress.
-  def wordpress?
-    wordpress = false
-
-    response = Browser.get_and_follow_location(@uri.to_s)
-
-    if response.body =~ /["'][^"']*\/wp-content\/[^"']*["']/i
-      wordpress = true
-    else
-
-      if has_xml_rpc?
-        wordpress = true
-      else
-        response = Browser.get_and_follow_location(login_url)
-
-        if response.code == 200 && response.body =~ %r{WordPress}i
-          wordpress = true
-        end
-      end
-    end
-
-    wordpress
+  def sharepoint?
+    false
   end
 
   def login_url
