@@ -62,6 +62,17 @@ describe WpTarget do
 
     end
 
+    context "is a SharePoint site" do
+      before :each do
+        stub_request(:get, wp_target.url).
+          to_return(status: 200, body: '', headers: { "MicrosoftSharePointTeamServices" => "14.0.0.4762" })
+      end
+
+      it "checks for a 'MicrosoftSharePointTeamServices' HTTP header" do
+        wp_target.should be_sharepoint
+      end
+    end
+
   end
 
   describe '#redirection' do

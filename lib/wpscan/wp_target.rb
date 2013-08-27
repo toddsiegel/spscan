@@ -31,10 +31,13 @@ class WpTarget < WebSite
     Browser.instance(options.merge(:max_threads => options[:threads]))
   end
 
-  # check if the target website is
-  # actually running wordpress.
   def sharepoint?
-    false
+    response = Browser.get_and_follow_location(@uri.to_s)
+    if has_sharepoint_headers?(response)
+      true
+    else
+      false
+    end
   end
 
   def login_url
@@ -110,4 +113,10 @@ class WpTarget < WebSite
     resp = Browser.get(search_replace_db_2_url)
     resp.code == 200 && resp.body[%r{by interconnect}i]
   end
+
+  private
+
+    def has_sharepoint_headers?(response)
+      response.headers and response.headers.keys.any? { |h| h.downcase == "MicrosoftSharePointTeamServices".downcase }
+    end
 end
