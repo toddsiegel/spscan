@@ -64,8 +64,12 @@ class WpTarget < WebSite
   #
   # @return [ WpVersion ]
   # :nocov:
-  def version(versions_xml)
-    WpVersion.find(@uri, wp_content_dir, wp_plugins_dir, versions_xml)
+  def version
+    version = Object.new
+    def version.unknown?
+      true
+    end
+    version
   end
   # :nocov:
 

@@ -168,4 +168,23 @@ describe WpTarget do
     end
   end
 
+  describe "version" do
+
+      subject(:target) { WpTarget.new(target_url, options) }
+      let(:target_url)    { 'http://example.localhost/' }
+      let(:options)       {
+        {
+          version_header_mappings: {'12345' => "SharePoint 3000"}
+        }
+      }
+
+      it "returns an unknown version when the header mapping does not exist" do
+        stub_request(:get, wp_target.url).
+          to_return(status: 200, body: '')
+
+        target.version.should be_unknown
+      end
+
+  end
+
 end
