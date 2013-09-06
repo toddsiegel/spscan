@@ -94,7 +94,7 @@ class WpItems < Array
       regex2 = %r{\\?/}
       regex3 = %r{\\?/([^/\\"']+)\\?(?:/|"|')}
 
-      /#{regex1}#{Regexp.escape(wp_target.wp_content_dir)}#{regex2}#{Regexp.escape(type)}#{regex3}/i
+      /#{regex1}#{Regexp.escape(p(wp_target.wp_content_dir))}#{regex2}#{Regexp.escape(type)}#{regex3}/i
     end
 
     # The default request parameters

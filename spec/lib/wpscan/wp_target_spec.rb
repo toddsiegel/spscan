@@ -69,6 +69,12 @@ describe WpTarget do
 
         wp_target.should be_sharepoint
       end
+
+      it "checks for a sharepoint GENERATOR meta tag" do
+        stub_request_to_fixture(url: wp_target.url, fixture: fixtures_dir + '/wp_content_dir/sharepoint.html')
+
+        wp_target.should be_sharepoint        
+      end
     end
 
   end

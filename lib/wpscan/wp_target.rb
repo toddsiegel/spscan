@@ -33,11 +33,7 @@ class WpTarget < WebSite
 
   def sharepoint?
     response = Browser.get_and_follow_location(@uri.to_s)
-    if has_sharepoint_headers?(response)
-      true
-    else
-      false
-    end
+    has_sharepoint_headers?(response) || has_sharepoint_generator_tag?(response)
   end
 
   def login_url
@@ -115,6 +111,11 @@ class WpTarget < WebSite
   end
 
   private
+
+    def has_sharepoint_generator_tag?(response)
+      html = Nokogiri::HTML.parse(response.response_body)
+      html.search('meta[name="GENERATOR"][content="Microsoft SharePoint"]').any?
+    end
 
     def has_sharepoint_headers?(response)
       response.headers and response.headers.keys.any? { |h| h.downcase == "MicrosoftSharePointTeamServices".downcase }
