@@ -171,18 +171,21 @@ describe WpTarget do
   describe "version" do
 
       subject(:target) { WpTarget.new(target_url, options) }
+      let(:expected_version) { "SPVERSION" }
       let(:target_url)    { 'http://example.localhost/' }
-      let(:options)       {
+      let(:options) {
+        version_mappings = double("version mappings")
+        version_mappings.stub(:version_for).and_return(expected_version)
         {
-          version_header_mappings: {'12345' => "SharePoint 3000"}
-        }
+          version_mappings: version_mappings  
+        }        
       }
 
-      it "returns an unknown version when the header mapping does not exist" do
+      it "returns an version number when the header not exists" do
         stub_request(:get, wp_target.url).
-          to_return(status: 200, body: '', headers: { "MicrosoftSharePointTeamServices" => "Not a real version" })
+          to_return(status: 200, body: '', headers: { "MicrosoftSharePointTeamServices" => expected_version })
 
-        target.version.should == "Unknown"
+        target.version.should == expected_version
       end
 
   end

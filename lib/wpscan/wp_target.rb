@@ -27,6 +27,7 @@ class WpTarget < WebSite
     @wp_content_dir = options[:wp_content_dir]
     @wp_plugins_dir = options[:wp_plugins_dir]
     @multisite      = nil
+    @version_mappings = options[:version_mappings]
 
     Browser.instance(options.merge(:max_threads => options[:threads]))
   end
@@ -65,7 +66,7 @@ class WpTarget < WebSite
   # @return [ WpVersion ]
   # :nocov:
   def version
-    "Unknown"
+    version_mappings.version_for version_header_value
   end
   # :nocov:
 
@@ -112,6 +113,8 @@ class WpTarget < WebSite
 
   private
 
+    attr_reader :version_mappings
+
     def has_sharepoint_generator_tag?(response)
       html = Nokogiri::HTML.parse(response.response_body)
       html.search('meta[name="GENERATOR"][content="Microsoft SharePoint"]').any?
@@ -119,5 +122,10 @@ class WpTarget < WebSite
 
     def has_sharepoint_headers?(response)
       response.headers and response.headers.keys.any? { |h| h.downcase == "MicrosoftSharePointTeamServices".downcase }
+    end
+
+    def version_header_value
+      response = Browser.get_and_follow_location(@uri.to_s)
+      response.headers and response.headers["MicrosoftSharePointTeamServices"]
     end
 end
