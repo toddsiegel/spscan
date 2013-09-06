@@ -5,7 +5,7 @@ require 'spec_helper'
 describe 'wpscan main checks' do
 
   it 'should check for errors on running the mainscript' do
-    a = %x[ruby #{ROOT_DIR}/wpscan.rb]
+    a = %x[ruby #{ROOT_DIR}/spscan.rb]
     a.should =~ /No argument supplied/
   end
 
