@@ -187,42 +187,6 @@ def main
       wp_theme.output
     end
 
-    # if wpscan_options.enumerate_plugins == nil and wpscan_options.enumerate_only_vulnerable_plugins == nil
-    #   puts
-    #   puts green('[+]') + ' Enumerating plugins from passive detection ... '
-
-    #   wp_plugins = WpPlugins.passive_detection(wp_target)
-    #   if !wp_plugins.empty?
-    #     puts "#{wp_plugins.size} plugins found :"
-
-    #     wp_plugins.output
-    #   else
-    #     puts 'No plugins found :('
-    #   end
-    # end
-
-    # # Enumerate the installed plugins
-    # if wpscan_options.enumerate_plugins or wpscan_options.enumerate_only_vulnerable_plugins or wpscan_options.enumerate_all_plugins
-    #   puts
-    #   puts green('[+]') + " Enumerating installed plugins #{'(only vulnerable ones)' if wpscan_options.enumerate_only_vulnerable_plugins} ..."
-    #   puts
-
-    #   wp_plugins = WpPlugins.aggressive_detection(wp_target,
-    #     enum_options.merge(
-    #       file: wpscan_options.enumerate_all_plugins ? PLUGINS_FULL_FILE : PLUGINS_FILE,
-    #       only_vulnerable: wpscan_options.enumerate_only_vulnerable_plugins || false
-    #     )
-    #   )
-    #   puts
-    #   if !wp_plugins.empty?
-    #     puts green('[+]') + " We found #{wp_plugins.size} plugins:"
-
-    #     wp_plugins.output
-    #   else
-    #     puts 'No plugins found :('
-    #   end
-    # end
-
     # Enumerate installed themes
     if wpscan_options.enumerate_themes or wpscan_options.enumerate_only_vulnerable_themes or wpscan_options.enumerate_all_themes
       puts
