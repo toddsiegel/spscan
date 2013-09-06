@@ -48,7 +48,7 @@ def main
 
     # Remote website up?
     unless wp_target.online?
-      raise "The WordPress URL supplied '#{wp_target.uri}' seems to be down."
+      raise "The SharePoint URL supplied '#{wp_target.uri}' seems to be down."
     end
 
     if wpscan_options.proxy
@@ -85,7 +85,7 @@ def main
     # Remote website is wordpress?
     unless wpscan_options.force
       unless wp_target.sharepoint?
-        raise 'The remote website is up, but does not seem to be running WordPress.'
+        raise 'The remote website is up, but does not seem to be running SharePoint.'
       end
     end
 
