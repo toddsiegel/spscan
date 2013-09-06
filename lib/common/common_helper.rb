@@ -88,21 +88,19 @@ end
 # our 1337 banner
 def banner
   puts '_______________________________________________________________'
-  puts '        __          _______   _____                  '
-  puts '        \\ \\        / /  __ \\ / ____|                 '
-  puts '         \\ \\  /\\  / /| |__) | (___   ___  __ _ _ __  '
-  puts '          \\ \\/  \\/ / |  ___/ \\___ \\ / __|/ _` | \'_ \\ '
-  puts '           \\  /\\  /  | |     ____) | (__| (_| | | | |'
-  puts '            \\/  \\/   |_|    |_____/ \\___|\\__,_|_| |_|'
+  puts '         ____    ____   _____                  '
+  puts '        / ____|/  __ \\ / ____|                 '
+  puts '        | (___  | |__) | (___   ___  __ _ _ ___ '
+  puts '        \\__ \ |  ___/ \\___ \\ / __|/ _` | \ _ \\ '
+  puts '        ____)  || |     ____) | (__| (_| | | | |'
+  puts '       |_____/ \|_|    |_____/ \\___|\\__,_|_| |_|'
   puts
-  puts '        WordPress Security Scanner by the WPScan Team '
+  puts '        SharePoint Security Scanner '
   if REVISION
     puts "                    Version #{version}"
   else
     puts "                        Version #{version}"
   end
-  puts '     Sponsored by the RandomStorm Open Source Initiative'
-  puts ' @_WPScan_, @ethicalhack3r, @erwan_lr, @gbrindisi, @_FireFart_'
   puts '_______________________________________________________________'
   puts
 end
