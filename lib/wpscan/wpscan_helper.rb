@@ -3,6 +3,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/../common/common_helper')
 
 require_files_from_directory(WPSCAN_LIB_DIR, '**/*.rb')
+require_relative "../spscan/version_mappings"
 
 # wpscan usage
 def usage
@@ -96,4 +97,17 @@ def help
   puts '--help     | -h This help screen.'
   puts '--verbose  | -v Verbose output.'
   puts
+end
+
+def load_version_mappings
+  mappings = {}
+  version_filepath = File.expand_path(File.dirname(__FILE__) + '/../../data/sp_version_mappings.txt')
+  IO.foreach(version_filepath) do |line|
+    line = line.sub(/#/, "").strip
+    unless line.empty?
+      version_info = line.split('=')
+      mappings[version_info[0]]=version_info[1] 
+    end
+  end
+  VersionMappings.new(mappings)
 end

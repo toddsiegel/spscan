@@ -44,7 +44,8 @@ def main
       exit(0)
     end
 
-    wp_target = WpTarget.new(wpscan_options.url, wpscan_options.to_h)
+    version_mappings = load_version_mappings
+    wp_target = WpTarget.new(wpscan_options.url, wpscan_options.to_h.merge(version_mappings: version_mappings))
 
     # Remote website up?
     unless wp_target.online?
@@ -176,10 +177,7 @@ def main
       exclude_content:  wpscan_options.exclude_content_based
     }
 
-    version = wp_target.version
-    if version =
-      wp_version.output
-    end
+    puts green('[+]') + " The SharePoint version is #{wp_target.version}"
 
     if wp_theme = wp_target.theme
       puts
