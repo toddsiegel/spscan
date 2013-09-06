@@ -65,11 +65,7 @@ class WpTarget < WebSite
   # @return [ WpVersion ]
   # :nocov:
   def version
-    version = Object.new
-    def version.unknown?
-      true
-    end
-    version
+    "Unknown"
   end
   # :nocov:
 

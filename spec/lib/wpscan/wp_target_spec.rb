@@ -180,9 +180,9 @@ describe WpTarget do
 
       it "returns an unknown version when the header mapping does not exist" do
         stub_request(:get, wp_target.url).
-          to_return(status: 200, body: '')
+          to_return(status: 200, body: '', headers: { "MicrosoftSharePointTeamServices" => "Not a real version" })
 
-        target.version.should be_unknown
+        target.version.should == "Unknown"
       end
 
   end
