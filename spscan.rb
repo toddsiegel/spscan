@@ -44,9 +44,6 @@ def main
       exit(0)
     end
 
-    version_mappings = load_version_mappings
-    wp_target = WpTarget.new(wpscan_options.url, wpscan_options.to_h.merge(version_mappings: version_mappings))
-
     # Remote website up?
     unless wp_target.online?
       raise "The SharePoint URL supplied '#{wp_target.uri}' seems to be down."
@@ -89,6 +86,9 @@ def main
         raise 'The remote website is up, but does not seem to be running SharePoint.'
       end
     end
+
+    version_mappings = load_version_mappings
+    wp_target = WpTarget.new(wpscan_options.url, wpscan_options.to_h.merge(version_mappings: version_mappings))
 
     # unless wp_target.wp_content_dir
     #   raise 'The wp_content_dir has not been found, please supply it with --wp-content-dir'
