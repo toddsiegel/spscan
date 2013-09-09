@@ -101,15 +101,15 @@ end
 
 def load_version_mappings
   mappings = {}
-  vulnerability_source = XmlVulnerabilitySource.new(File.dirname(__FILE__) + '/../../data/sp_vulns.xml')
+  vulnerability_source = SpScan::XmlVulnerabilitySource.new(File.dirname(__FILE__) + '/../../data/sp_vulns.xml')
 
   version_filepath = File.expand_path(File.dirname(__FILE__) + '/../../data/sp_version_mappings.txt')
   IO.foreach(version_filepath) do |line|
     line = line.sub(/#/, "").strip
     unless line.empty?
       version_info = line.split('=')
-      mappings[version_info[0]]=Version.new(version_info[1], vulnerability_source)
+      mappings[version_info[0]]=SpScan::Version.new(version_info[1], vulnerability_source)
     end
   end
-  VersionMappings.new(mappings)
+  SpScan::VersionMappings.new(mappings)
 end

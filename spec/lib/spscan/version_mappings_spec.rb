@@ -1,20 +1,23 @@
 require_relative '../../../lib/spscan/version_mappings'
 require_relative '../../../lib/spscan/version'
 
-describe VersionMappings do
+module SpScan
 
-  it "returns an unknown version for an unknown header version" do
-    mappings = VersionMappings.new({})
-    unknown = mappings.version_for("unknown_header_value")
-    unknown.should be_unknown
-    unknown.to_s.should == "Unknown"
-  end
+  describe VersionMappings do
 
-  it "returns the version for a known header version" do
-    expected_version = Object.new
+    it "returns an unknown version for an unknown header version" do
+      mappings = VersionMappings.new({})
+      unknown = mappings.version_for("unknown_header_value")
+      unknown.should be_unknown
+      unknown.to_s.should == "Unknown"
+    end
 
-    mappings = VersionMappings.new({"known_header_value" => expected_version})
-    version = mappings.version_for "known_header_value"
-    version.should == expected_version
+    it "returns the version for a known header version" do
+      expected_version = Object.new
+
+      mappings = VersionMappings.new({"known_header_value" => expected_version})
+      version = mappings.version_for "known_header_value"
+      version.should == expected_version
+    end
   end
 end
