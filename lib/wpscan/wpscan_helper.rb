@@ -3,10 +3,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/../common/common_helper')
 
 require_files_from_directory(WPSCAN_LIB_DIR, '**/*.rb')
-require_relative "../spscan/version_mappings"
-require_relative "../spscan/version"
-require_relative "../spscan/vulnerability"
-require_relative "../spscan/xml_vulnerability_source"
+require_relative "../spscan"
 
 # wpscan usage
 def usage
