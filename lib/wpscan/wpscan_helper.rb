@@ -4,6 +4,9 @@ require File.expand_path(File.dirname(__FILE__) + '/../common/common_helper')
 
 require_files_from_directory(WPSCAN_LIB_DIR, '**/*.rb')
 require_relative "../spscan/version_mappings"
+require_relative "../spscan/version"
+require_relative "../spscan/vulnerability"
+require_relative "../spscan/xml_vulnerability_source"
 
 # wpscan usage
 def usage
@@ -101,12 +104,14 @@ end
 
 def load_version_mappings
   mappings = {}
+  vulnerability_source = XmlVulnerabilitySource.new(File.dirname(__FILE__) + '/../../data/sp_vulns.xml')
+
   version_filepath = File.expand_path(File.dirname(__FILE__) + '/../../data/sp_version_mappings.txt')
   IO.foreach(version_filepath) do |line|
     line = line.sub(/#/, "").strip
     unless line.empty?
       version_info = line.split('=')
-      mappings[version_info[0]]=version_info[1] 
+      mappings[version_info[0]]=Version.new(version_info[1], vulnerability_source)
     end
   end
   VersionMappings.new(mappings)

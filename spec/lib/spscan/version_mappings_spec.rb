@@ -1,4 +1,5 @@
 require_relative '../../../lib/spscan/version_mappings'
+require_relative '../../../lib/spscan/version'
 
 describe VersionMappings do
 
@@ -10,10 +11,10 @@ describe VersionMappings do
   end
 
   it "returns the version for a known header version" do
-    expected_version = "1.0"
-    mappings = VersionMappings.new("known_header_value" => Version.new(expected_version))
+    expected_version = Object.new
+
+    mappings = VersionMappings.new({"known_header_value" => expected_version})
     version = mappings.version_for "known_header_value"
-    version.to_s.should == expected_version
-    version.should_not be_unknown
+    version.should == expected_version
   end
 end

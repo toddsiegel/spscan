@@ -91,6 +91,10 @@ class WpTarget < WebSite
     WebSite.has_log?(debug_log_url, %r{\[[^\]]+\] PHP (?:Warning|Error|Notice):})
   end
 
+  def has_vulnerabilities?
+    version.has_vulnerabilities?
+  end
+
   # @return [ String ]
   def debug_log_url
     @uri.merge("#{wp_content_dir()}/debug.log").to_s
@@ -109,6 +113,10 @@ class WpTarget < WebSite
   def search_replace_db_2_exists?
     resp = Browser.get(search_replace_db_2_url)
     resp.code == 200 && resp.body[%r{by interconnect}i]
+  end
+
+  def vulnerabilities
+    version.vulnerabilities
   end
 
   private

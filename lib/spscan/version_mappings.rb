@@ -13,34 +13,3 @@ class VersionMappings
   attr_reader :mappings
 
 end
-
-class UnknownVersion
-  def unknown?
-    true
-  end
-
-  def to_s
-    "Unknown"
-  end
-end
-
-
-class Version
-
-  def initialize(idenfitier)
-    @version_idenfitier = idenfitier
-  end
-
-  def unknown?
-    false
-  end
-
-  def to_s
-    version_idenfitier
-  end
-
-  private
-
-  attr_reader :version_idenfitier
-
-end

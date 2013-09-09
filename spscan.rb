@@ -45,7 +45,6 @@ def main
     end
 
     version_mappings = load_version_mappings
-
     wp_target = WpTarget.new(wpscan_options.url, wpscan_options.to_h.merge(version_mappings: version_mappings))
 
     # Remote website up?
@@ -166,6 +165,19 @@ def main
     }
 
     puts green('[+]') + " The SharePoint version is #{wp_target.version}"
+
+    if wp_target.has_vulnerabilities?
+      puts green('[+]') + " Vulnerabilities"
+      wp_target.vulnerabilities.each do |vuln|
+        puts "Title: #{vuln.title}"
+        puts "References:"
+        vuln.references.each do |ref|
+          puts "\t#{ref}"
+        end
+        puts "Type: #{vuln.type}"
+      end
+    end
+
 
     if wp_theme = wp_target.theme
       puts

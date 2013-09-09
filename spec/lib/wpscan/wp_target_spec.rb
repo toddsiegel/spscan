@@ -187,7 +187,54 @@ describe WpTarget do
 
         target.version.should == expected_version
       end
-
   end
 
+  describe "vulnerabilties" do
+
+    subject(:target) { WpTarget.new(target_url, options) }
+
+    let(:version_mappings) {
+      mappings = double("version mappings")
+      mappings.stub(:version_for).and_return(version)
+      mappings
+    }
+
+    let(:options) {
+      { version_mappings: version_mappings }  
+    }
+
+    context "when the current version has none" do
+
+      let(:version) {
+        version = double("version")
+        version.stub(:has_vulnerabilities?).and_return(false)
+        version
+      }
+
+      it "does not have vulnerabilties" do
+        stub_request(:get, wp_target.url).
+          to_return(status: 200, body: '', headers: { "MicrosoftSharePointTeamServices" => "14.0.0.4762" })
+
+        target.has_vulnerabilities?.should be_false
+      end
+
+      context "when the current version has vulnerabilties" do
+
+        let(:version) {
+          version = double("version")
+          version.stub(:has_vulnerabilities?).and_return(true)
+          version
+        }
+
+        it "has vulnerabilties" do
+          stub_request(:get, wp_target.url).
+            to_return(status: 200, body: '', headers: { "MicrosoftSharePointTeamServices" => "14.0.0.4762" })
+
+          target.has_vulnerabilities?.should be_true
+        end
+
+      end
+
+    end
+  end
 end
