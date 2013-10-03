@@ -72,7 +72,7 @@ def main
 
       if wpscan_options.follow_redirection or Readline.readline =~ /^y/i
         wpscan_options.url = redirection
-        wp_target = WpTarget.new(redirection, wpscan_options.to_h)
+        wp_target = WpTarget.new(redirection, wpscan_options.to_h.merge(version_mappings: version_mappings))
       else
         puts 'Scan aborted'
         exit(0)

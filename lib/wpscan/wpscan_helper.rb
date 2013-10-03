@@ -111,5 +111,6 @@ def load_version_mappings
       mappings[version_info[0]]=SpScan::Version.new(version_info[1], vulnerability_source)
     end
   end
+
   SpScan::VersionMappings.new(mappings)
 end

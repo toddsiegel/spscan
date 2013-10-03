@@ -31,6 +31,10 @@ module SpScan
   end
 
   class UnknownVersion
+    def has_vulnerabilities?
+      false
+    end
+
     def unknown?
       true
     end
